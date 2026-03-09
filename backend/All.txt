@@ -1,0 +1,186 @@
+////////////////////////////////////////////////////server.js//////////////////////////////////////////////////////////////////////////////
+
+This is the main entry point of the backend application.
+
+Responsibilities:
+
+• Starts the Express server
+• Connects the database
+• Loads environment variables
+• Enables middleware such as CORS and JSON parsing
+• Connects route files to the server
+
+It essentially initializes the backend system.
+
+///////////////////////////////////////////////config/db.js////////////////////////////////////////////////
+
+This file handles the connection to MongoDB Atlas.
+
+Responsibilities:
+
+• Uses Mongoose to connect to the database
+• Reads the database URI from the .env file
+• Ensures the database connection is established when the server starts
+
+Without this file, the backend cannot store or retrieve any data.
+
+///////////////////////////////////////////////////////////////////models///////////////////////////////////////////////////////////////////
+
+Models define how data is stored in the database.
+
+They represent the structure of collections inside MongoDB.
+
+///////////////////////////////////////////////////////////////////Teacher.js///////////////////////////////////////////////////////////////////
+
+Defines the structure of teacher accounts.
+
+Fields stored:
+
+• name – teacher's name
+• email – unique email used for login
+• password – hashed password
+
+This model allows teachers to register and login securely.
+
+///////////////////////////////////////////////////////////////////Quiz.js///////////////////////////////////////////////////////////////////
+
+Defines the structure of quizzes created by teachers.
+
+Fields stored:
+
+• teacher – reference to the teacher who created the quiz
+• title – quiz title
+• questions – list of quiz questions
+• timeLimit – optional time limit
+
+Each question contains:
+
+• questionText
+• options (4 choices)
+• correctOptionIndex
+
+Correct answers are stored only in the backend to prevent cheating.
+
+///////////////////////////////////////////////////////////////////Submission.js///////////////////////////////////////////////////////////////////
+
+Stores student attempts for quizzes.
+
+Fields stored:
+
+• quiz – reference to quiz attempted
+• studentName – name entered by student
+• rollNo – student roll number
+• branch – student's branch/class
+• answers – selected options by student
+• score – calculated score
+
+A unique index is created on (quiz + rollNo) to ensure that a student cannot attempt the same quiz multiple times.
+
+///////////////////////////////////////////////////////////////////controllers///////////////////////////////////////////////////////////////////
+
+Controllers contain the main logic of the application.
+
+They process requests and interact with the database.
+
+///////////////////////////////////////////////////////////////////authController.js///////////////////////////////////////////////////////////////////
+
+Handles teacher authentication.
+
+Functions implemented:
+
+registerTeacher()
+
+• Creates a new teacher account
+• Checks if email already exists
+• Hashes the password using bcrypt
+• Stores the teacher in the database
+
+loginTeacher()
+
+• Verifies teacher credentials
+• Compares hashed password
+• Generates JWT token for authentication
+
+///////////////////////////////////////////////////////////////////quizController.js///////////////////////////////////////////////////////////////////
+
+Handles quiz operations.
+
+Functions implemented:
+
+createQuiz()
+
+• Allows a logged-in teacher to create a quiz
+• Stores quiz questions and answers in the database
+• Returns a shareable quiz link
+
+getQuizById()
+
+• Fetches quiz questions for students
+• Removes correct answers before sending to prevent cheating
+
+submitQuiz()
+
+• Accepts student answers
+• Calculates score automatically
+• Stores submission in the database
+• Prevents duplicate attempts
+
+getQuizResults()
+
+• Allows teacher to view student results
+• Ensures only quiz owner can access results
+• Sorts results by score
+• Allows filtering by branch
+
+///////////////////////////////////////////////////////////////////middleware///////////////////////////////////////////////////////////////////
+
+Middleware runs before request processing.
+
+///////////////////////////////////////////////////////////////////authMiddleware.js///////////////////////////////////////////////////////////////////
+
+Protects routes that require authentication.
+
+Responsibilities:
+
+• Extracts JWT token from request header
+• Verifies token using secret key
+• Identifies which teacher is making the request
+• Blocks access if token is invalid
+
+Used to ensure that only authenticated teachers can create quizzes or view results.
+
+///////////////////////////////////////////////////////////////////routes///////////////////////////////////////////////////////////////////
+
+Routes define the API endpoints of the backend.
+
+They connect HTTP requests to controller functions.
+
+///////////////////////////////////////////////////////////////////authRoutes.js///////////////////////////////////////////////////////////////////
+
+Handles authentication related routes.
+
+Endpoints:
+
+POST /api/auth/register
+Creates teacher account
+
+POST /api/auth/login
+Logs in teacher and returns JWT token
+
+///////////////////////////////////////////////////////////////////quizRoutes.js///////////////////////////////////////////////////////////////////
+
+Handles quiz-related operations.
+
+Endpoints:
+
+POST /api/quiz/create
+Creates a new quiz (teacher only)
+
+GET /api/quiz/:id
+Fetches quiz questions for students
+
+POST /api/quiz/:id/submit
+Allows students to submit quiz answers
+
+GET /api/quiz/:id/results
+Allows teachers to view quiz results
