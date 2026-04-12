@@ -9,7 +9,7 @@ export default function Sidebar() {
   ];
 
   return (
-    <aside className="w-64 border-r bg-white min-h-[calc(100vh-4rem)] hidden md:block">
+    <aside className="w-64 shrink-0 border-r bg-white hidden md:block">
       <nav className="flex flex-col gap-2 p-4">
         {navItems.map((item) => {
           const Icon = item.icon;

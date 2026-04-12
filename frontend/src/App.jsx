@@ -1,6 +1,6 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import Navbar from './components/layout/Navbar';
+import PublicLayout from './components/layout/PublicLayout';
 import ProtectedRoute from './components/layout/ProtectedRoute';
 import TeacherLayout from './components/layout/TeacherLayout';
 
@@ -15,30 +15,28 @@ import QuizResult from './pages/student/QuizResult';
 
 function App() {
   return (
-    <div className="min-h-screen flex flex-col bg-surface">
-      <Navbar />
-      <div className="flex-1 flex flex-col pt-16">
-        <Routes>
-          {/* Public routes */}
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/quiz/:id" element={<TakeQuiz />} />
-          <Route path="/quiz/:id/result" element={<QuizResult />} />
+    <Routes>
+      <Route element={<PublicLayout />}>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/quiz/:id" element={<TakeQuiz />} />
+        <Route path="/quiz/:id/result" element={<QuizResult />} />
+      </Route>
 
-          {/* Protected Teacher routes */}
-          <Route path="/teacher" element={
-            <ProtectedRoute>
-              <TeacherLayout />
-            </ProtectedRoute>
-          }>
-            <Route path="dashboard" element={<Dashboard />} />
-            <Route path="create-quiz" element={<CreateQuiz />} />
-            <Route path="quiz/:id/results" element={<QuizResults />} />
-          </Route>
-        </Routes>
-      </div>
-    </div>
+      <Route
+        path="/teacher"
+        element={
+          <ProtectedRoute>
+            <TeacherLayout />
+          </ProtectedRoute>
+        }
+      >
+        <Route path="dashboard" element={<Dashboard />} />
+        <Route path="create-quiz" element={<CreateQuiz />} />
+        <Route path="quiz/:id/results" element={<QuizResults />} />
+      </Route>
+    </Routes>
   );
 }
 
