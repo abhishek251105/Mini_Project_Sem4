@@ -7,7 +7,7 @@ const useAuthStore = create((set) => ({
   isAuthenticated: !!localStorage.getItem('token'),
 
   login: async (email, password) => {
-    const res = await api.post('api/auth/login', { email, password });
+    const res = await api.post('/api/auth/login', { email, password });
     const { teacher, token } = res.data;
     localStorage.setItem('token', token);
     localStorage.setItem('teacher', JSON.stringify(teacher));
@@ -16,7 +16,7 @@ const useAuthStore = create((set) => ({
   },
 
   register: async (name, email, password) => {
-    const res = await api.post('api/auth/register', { name, email, password });
+    const res = await api.post('/api/auth/register', { name, email, password });
     return res.data;
   },
 
