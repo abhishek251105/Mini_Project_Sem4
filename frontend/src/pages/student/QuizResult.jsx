@@ -14,7 +14,7 @@ export default function QuizResult() {
     <div className="flex-1 flex items-center justify-center p-4">
       <Card className="w-full max-w-md overflow-hidden">
         <div className="bg-primary-600 h-32 flex items-center justify-center relative">
-          <div className="absolute -bottom-10 bg-white p-4 rounded-full border-4 border-white shadow-xl">
+          <div className="absolute -bottom-5 bg-white p-4 rounded-full border-4 border-white shadow-xl">
             <div className="bg-primary-100 p-4 rounded-full text-primary-600">
                <Trophy className="w-10 h-10" />
             </div>
