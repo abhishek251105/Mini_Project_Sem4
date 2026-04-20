@@ -1,8 +1,7 @@
 import axios from 'axios';
 
-/** Axios instance for student / public quiz endpoints — never sends Authorization. */
 const publicApi = axios.create({
-  baseURL: "", 
+  baseURL: 'http://13.53.122.101:5000',
 });
 
 export default publicApi;
