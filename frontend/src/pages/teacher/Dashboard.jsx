@@ -5,6 +5,7 @@ import { Card, CardContent } from '../../components/ui/Card';
 import Button from '../../components/ui/Button';
 import useAuthStore from '../../store/useAuthStore';
 import { toast } from 'react-hot-toast';
+import { copyToClipboard } from '../../utils/clipboard';
 
 export default function Dashboard() {
   const { teacher } = useAuthStore();
@@ -19,9 +20,14 @@ export default function Dashboard() {
     setIsLoading(false);
   }, [teacher?.id]);
 
-  const copyLink = (id) => {
+  const copyLink = async (id) => {
     const link = `${window.location.origin}/quiz/${id}`;
-    navigator.clipboard.writeText(link);
+    const ok = await copyToClipboard(link);
+    if (!ok) {
+      toast.error('Copy failed. Please copy the link manually.');
+      return;
+    }
+
     setCopiedId(id);
     toast.success('Quiz link copied!');
     setTimeout(() => setCopiedId(null), 2000);
