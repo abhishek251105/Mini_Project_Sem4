@@ -1,0 +1,24 @@
+# 1. Clone the repository or extract the project folder:
+git clone <repository_url>
+cd Mini_Project_Sem4
+
+# 2. Backend Setup
+cd backend
+npm install
+# Create a .env file in the backend directory with the following variables:
+# MONGODB_URI=your_mongodb_connection_string
+# JWT_SECRET=your_jwt_secret
+# PORT=5000
+npm run dev
+
+# 3. Frontend Setup
+# Open a new terminal window/tab
+cd ../frontend
+npm install
+# Create a .env file in the frontend directory with the following variable:
+# VITE_API_URL=http://localhost:5000/api
+npm run dev
+
+# 4. Access the Application
+# The frontend will run on http://localhost:5173 by default. 
+# The backend will run on http://localhost:5000.

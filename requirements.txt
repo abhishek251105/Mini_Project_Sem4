@@ -1,0 +1,23 @@
+Node.js >= 18.0.0
+npm >= 9.0.0
+
+# Backend Dependencies
+express>=5.2.1
+mongoose>=9.2.1
+bcryptjs>=3.0.3
+jsonwebtoken>=9.0.3
+cors>=2.8.6
+dotenv>=17.3.1
+
+# Frontend Dependencies
+react>=19.2.4
+react-dom>=19.2.4
+react-router-dom>=7.13.1
+axios>=1.13.6
+zustand>=5.0.12
+framer-motion>=12.38.0
+lucide-react>=0.577.0
+react-hook-form>=7.72.0
+react-hot-toast>=2.6.0
+tailwindcss>=3.4.19
+vite>=8.0.1
