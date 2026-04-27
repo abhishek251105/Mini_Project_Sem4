@@ -82,8 +82,6 @@ Mini_Project_Sem4/
     │   └── App.jsx     # Main React application and routing component
 ```
 
-## Screenshots / Demo
-*(Placeholder: Add screenshots of Teacher Dashboard, Quiz interface, and Home page here)*
 
 ## API Documentation 
 ### Authentication
@@ -97,15 +95,6 @@ Mini_Project_Sem4/
 - `POST /api/quiz/:id/submit` - Submit quiz answers and calculate results
 - `GET /api/quiz/:id/results` - Fetch quiz results (Teacher only)
 
-*Note: Endpoints may vary slightly based on specific routing configurations in the codebase.*
-
-## Contributing
-Contributions are welcome! Please follow these steps:
-1. Fork the repository.
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`).
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`).
-4. Push to the branch (`git push origin feature/AmazingFeature`).
-5. Open a Pull Request.
 
 ## License
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
