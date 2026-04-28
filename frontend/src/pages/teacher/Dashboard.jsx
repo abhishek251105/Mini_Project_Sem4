@@ -6,6 +6,7 @@ import Button from '../../components/ui/Button';
 import useAuthStore from '../../store/useAuthStore';
 import { toast } from 'react-hot-toast';
 import { copyToClipboard } from '../../utils/clipboard';
+import api from '../../services/api';
 
 export default function Dashboard() {
   const { teacher } = useAuthStore();
@@ -14,10 +15,25 @@ export default function Dashboard() {
   const [copiedId, setCopiedId] = useState(null);
 
   useEffect(() => {
-    // Load locally stored quizzes for this teacher since backend doesn't provide GET ALL endpoint
-    const stored = JSON.parse(localStorage.getItem(`quizzes_${teacher?.id}`) || '[]');
-    setQuizzes(stored.reverse()); // Latest first
-    setIsLoading(false);
+    const load = async () => {
+      if (!teacher?.id) {
+        setQuizzes([]);
+        setIsLoading(false);
+        return;
+      }
+
+      try {
+        const res = await api.get('/api/quiz/mine');
+        setQuizzes(Array.isArray(res.data) ? res.data : []);
+      } catch (error) {
+        toast.error(error.response?.data?.message || 'Failed to load quizzes');
+        setQuizzes([]);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    load();
   }, [teacher?.id]);
 
   const copyLink = async (id) => {

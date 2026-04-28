@@ -21,6 +21,28 @@ exports.createQuiz = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+// GET ALL QUIZZES FOR LOGGED-IN TEACHER
+exports.getMyQuizzes = async (req, res) => {
+  try {
+    const quizzes = await Quiz.find({ teacher: req.teacherId })
+      .sort({ createdAt: -1 })
+      .select("title timeLimit questions createdAt")
+      .lean();
+
+    const formatted = quizzes.map((q) => ({
+      _id: q._id,
+      title: q.title,
+      timeLimit: q.timeLimit,
+      questionsCount: Array.isArray(q.questions) ? q.questions.length : 0,
+      createdAt: q.createdAt
+    }));
+
+    res.json(formatted);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
 // GET QUIZ FOR STUDENT (no answers)
 exports.getQuizById = async (req, res) => {
   try {

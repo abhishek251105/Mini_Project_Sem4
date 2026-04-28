@@ -50,17 +50,6 @@ export default function CreateQuiz() {
       // Extract quiz ID from "quizLink": "/quiz/653..."
       const newQuizId = res.quizLink.split('/').pop();
 
-      // Save to local storage for the dashboard
-      const stored = JSON.parse(localStorage.getItem(`quizzes_${teacher.id}`) || '[]');
-      stored.push({
-        _id: newQuizId,
-        title: payload.title,
-        timeLimit: payload.timeLimit,
-        questionsCount: payload.questions.length,
-        createdAt: new Date().toISOString()
-      });
-      localStorage.setItem(`quizzes_${teacher.id}`, JSON.stringify(stored));
-
       toast.success('Quiz created successfully!');
       navigate('/teacher/dashboard');
     } catch (error) {

@@ -2,10 +2,13 @@ const express = require("express");
 const router = express.Router();
 const protect = require("../middleware/authMiddleware");
 
-const { createQuiz, getQuizById, submitQuiz, getQuizResults } = require("../controllers/quizController");
+const { createQuiz, getMyQuizzes, getQuizById, submitQuiz, getQuizResults } = require("../controllers/quizController");
 
 // teacher creates quiz
 router.post("/create", protect, createQuiz);
+
+// teacher fetches own quizzes
+router.get("/mine", protect, getMyQuizzes);
 
 // student fetch quiz
 router.get("/:id", getQuizById);
